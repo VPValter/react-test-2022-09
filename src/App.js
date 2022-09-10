@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import './App.css';
+import BlogList from './BlogList';
 
-function App() {
+const App = () => {
   const [results, setResults] = useState([]);
+  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     fetch('https://frontend-api-test-nultien.azurewebsites.net/api/BlogPosts')
       .then((res) => res.json())
       .then(
         (result) => {
-          console.log(result);
+          // console.log(result);
           setResults(result);
         },
         // (from React docs):
@@ -18,25 +20,25 @@ function App() {
         // exceptions from actual bugs in components.
         (error) => {
           console.log(error);
+          setErrorMsg('An error occured');
         }
       );
   }, []);
 
   return (
     <div className='App'>
-      <p>hello it's-a me, new App component</p>
+      <header>HEADER</header>
+
       {results.resultData && results.resultData.length ? (
-        results.resultData.map((item) => (
-          <div key={item.id}>
-            <h3>{item.title}</h3>
-            <small>{item.text}</small>
-          </div>
-        ))
+        <BlogList blogs={results.resultData} />
       ) : (
-        <p>No posts found</p>
+        <>
+          <p>No posts found</p>
+          {errorMsg && <p>{errorMsg}</p>}
+        </>
       )}
     </div>
   );
-}
+};
 
 export default App;
