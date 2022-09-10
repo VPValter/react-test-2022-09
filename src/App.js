@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import BlogList from './BlogList';
+import Header from './Header';
 
 const App = () => {
   const [results, setResults] = useState([]);
@@ -27,7 +28,7 @@ const App = () => {
 
   return (
     <div className='App'>
-      <header>HEADER</header>
+      <Header />
 
       {results.resultData && results.resultData.length ? (
         <BlogList blogs={results.resultData} />
