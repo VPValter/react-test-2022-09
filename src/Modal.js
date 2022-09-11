@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const Modal = ({ closeModal }) => {
+const Modal = ({ closeModal, getPosts, setModalShown }) => {
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
 
@@ -18,9 +18,10 @@ const Modal = ({ closeModal }) => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // REFRESH THE BLOGLIST:
+        getPosts();
         // TODO: CLOSE MODAL ( or show a message in it and close it manually ? )
-        // TODO: REFRESH THE BLOGLIST
+        setModalShown(false);
       });
   };
 

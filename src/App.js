@@ -15,7 +15,7 @@ const App = () => {
     }
   };
 
-  useEffect(() => {
+  const getPosts = () => {
     fetch('https://frontend-api-test-nultien.azurewebsites.net/api/BlogPosts')
       .then((res) => res.json())
       .then(
@@ -31,6 +31,10 @@ const App = () => {
           setErrorMsg('An error occured');
         }
       );
+  };
+
+  useEffect(() => {
+    getPosts();
   }, []);
 
   return (
@@ -50,7 +54,13 @@ const App = () => {
         </div>
       )}
 
-      {modalShown && <Modal closeModal={closeModal} />}
+      {modalShown && (
+        <Modal
+          closeModal={closeModal}
+          getPosts={getPosts}
+          setModalShown={setModalShown}
+        />
+      )}
     </div>
   );
 };
