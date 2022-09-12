@@ -46,7 +46,7 @@ const App = () => {
       </button>
 
       {results.resultData && results.resultData.length ? (
-        <BlogList blogs={results.resultData} />
+        <BlogList blogs={results.resultData} getPosts={getPosts} />
       ) : (
         <div className='container'>
           <p>No posts found</p>

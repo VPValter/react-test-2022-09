@@ -1,11 +1,10 @@
-const BlogList = ({ blogs }) => {
+import BlogListItem from './BlogListItem';
+
+const BlogList = ({ blogs, getPosts }) => {
   return (
-    <div className="container">
+    <div className='container'>
       {blogs.map((item) => (
-        <div key={item.id}>
-          <h3>{item.title}</h3>
-          <small>{item.text}</small>
-        </div>
+        <BlogListItem key={item.id} blog={item} getPosts={getPosts} />
       ))}
     </div>
   );
