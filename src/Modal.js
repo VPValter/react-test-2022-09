@@ -12,6 +12,7 @@ const Modal = ({ closeModal, getPosts, setModalShown }) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
     };
+    // TODO: Disable button to avoid duplicating requests
     fetch(
       'https://frontend-api-test-nultien.azurewebsites.net/api/BlogPosts',
       options

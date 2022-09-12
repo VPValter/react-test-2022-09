@@ -1,3 +1,7 @@
+body {
+  background-color: #eee;
+}
+
 .container {
   max-width: 1200px;
   width: 100%;
@@ -5,16 +9,10 @@
   margin: 0 auto;
 }
 
-ul,
-ol {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
 header {
   background-color: #222;
   color: #fff;
+  margin-bottom: 1rem;
 }
 
 header > .container {
@@ -43,6 +41,14 @@ a:hover,
 
 .home-link {
   margin-right: auto;
+}
+
+button {
+  background-color: #222;
+  border: none;
+  outline: none;
+  color: #fff;
+  padding: 0.5rem 1rem;
 }
 
 /* * * * * MODAL * * * * */
@@ -96,4 +102,55 @@ a:hover,
   width: 100%;
   margin: 0 auto;
   justify-content: space-evenly;
+}
+
+/* * * * * TOP * * * * */
+aside {
+  background-color: #fff;
+}
+section.top {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+section.top button {
+  margin-left: auto;
+}
+
+/* * * * * BLOG * * * * */
+.blog-item:nth-child(odd) {
+  background-color: #ccc;
+}
+.blog-item:nth-child(even) {
+  background-color: #fff;
+}
+aside,
+.blog-item {
+  border: 1px solid #222;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+.blog-item img {
+  border: 1px solid #222;
+}
+.blog-header {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+.blog-header .title-data {
+  padding: 0 1rem;
+}
+.blog-header button:first-of-type {
+  margin-left: auto;
+  margin-right: 1rem;
+}
+.blog-text {
+  margin-bottom: 1rem;
+}
+.blog-images {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
 }

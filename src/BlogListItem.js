@@ -1,6 +1,8 @@
+import profileImage from './80px-placeholder.jpg';
+import blogImage from './100px-placeholder.jpg';
+
 const BlogListItem = ({ blog, getPosts }) => {
   const handleDelete = (id) => {
-    console.log(id);
     fetch(
       `https://frontend-api-test-nultien.azurewebsites.net/api/BlogPosts/${id}`,
       {
@@ -13,12 +15,15 @@ const BlogListItem = ({ blog, getPosts }) => {
       getPosts();
     });
   };
+
   return (
     <div className='blog-item'>
       <div className='blog-header'>
-        {/* pic */}
-        <h3>{blog.title}</h3>
-        {/* date */}
+        <img src={profileImage} alt='' />
+        <div className='title-data'>
+          <h3>{blog.title}</h3>
+          <small>Created at: {blog.createdAt} by some person</small>
+        </div>
         <button type='button'>Edit</button>
         <button
           type='button'
@@ -32,7 +37,11 @@ const BlogListItem = ({ blog, getPosts }) => {
       <div className='blog-text'>
         <p>{blog.text}</p>
       </div>
-      <div className='blog-images'></div>
+      <div className='blog-images'>
+        <img src={blogImage} alt='' />
+        <img src={blogImage} alt='' />
+        <img src={blogImage} alt='' />
+      </div>
     </div>
   );
 };

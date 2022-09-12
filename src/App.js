@@ -41,18 +41,32 @@ const App = () => {
     <div className='App'>
       <Header />
 
-      <button type='button' onClick={() => setModalShown(true)}>
-        Show modal
-      </button>
-
-      {results.resultData && results.resultData.length ? (
-        <BlogList blogs={results.resultData} getPosts={getPosts} />
-      ) : (
-        <div className='container'>
-          <p>No posts found</p>
-          {errorMsg && <p>{errorMsg}</p>}
-        </div>
-      )}
+      <div className='container'>
+        <section className='top'>
+          <h1>Welcome to my blog</h1>
+          <button type='button' onClick={() => setModalShown(true)}>
+            Add post
+          </button>
+        </section>
+        <aside>
+          <h2>Blog categories</h2>
+          <ul>
+            <li>Category 1</li>
+            <li>Category 2</li>
+            <li>Category 3</li>
+          </ul>
+        </aside>
+        <main>
+          {results.resultData && results.resultData.length ? (
+            <BlogList blogs={results.resultData} getPosts={getPosts} />
+          ) : (
+            <>
+              <p>No posts found</p>
+              {errorMsg && <p>{errorMsg}</p>}
+            </>
+          )}
+        </main>
+      </div>
 
       {modalShown && (
         <Modal
