@@ -8,10 +8,12 @@ const App = () => {
   const [results, setResults] = useState([]);
   const [errorMsg, setErrorMsg] = useState('');
   const [modalShown, setModalShown] = useState(false);
+  const [editingPost, setEditingPost] = useState(null);
 
   const closeModal = (event) => {
     if (event.target.className.includes('close-modal')) {
       setModalShown(false);
+      setEditingPost(null);
     }
   };
 
@@ -58,7 +60,12 @@ const App = () => {
         </aside>
         <main>
           {results.resultData && results.resultData.length ? (
-            <BlogList blogs={results.resultData} getPosts={getPosts} />
+            <BlogList
+              blogs={results.resultData}
+              getPosts={getPosts}
+              setModalShown={setModalShown}
+              setEditingPost={setEditingPost}
+            />
           ) : (
             <>
               <p>No posts found</p>
@@ -73,6 +80,8 @@ const App = () => {
           closeModal={closeModal}
           getPosts={getPosts}
           setModalShown={setModalShown}
+          editingPost={editingPost}
+          setEditingPost={setEditingPost}
         />
       )}
     </div>
