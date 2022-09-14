@@ -6,10 +6,15 @@ const Modal = ({ closeModal, onSave, postId }) => {
   const [text, setText] = useState('');
 
   useEffect(() => {
-    fetchPost(postId).then((result) => {
-      setTitle(result.title);
-      setText(result.text);
-    });
+    if (postId) {
+      fetchPost(postId).then((result) => {
+        setTitle(result.title);
+        setText(result.text);
+      },
+      error => {
+        console.log(error);
+      });
+    }
   }, [postId]);
 
   const handleSubmit = (e) => {
