@@ -3,41 +3,64 @@ import './App.css';
 import BlogList from './BlogList';
 import Header from './Header';
 import Modal from './Modal';
+import { fetchPosts, deletePost, savePost } from './api-calls';
 
 const App = () => {
   const [results, setResults] = useState([]);
   const [errorMsg, setErrorMsg] = useState('');
   const [modalShown, setModalShown] = useState(false);
-  const [editingPost, setEditingPost] = useState(null);
-
-  const closeModal = (event) => {
-    if (event.target.className.includes('close-modal')) {
-      setModalShown(false);
-      setEditingPost(null);
-    }
-  };
+  const [postId, setPostId] = useState(undefined);
 
   const getPosts = () => {
-    fetch('https://frontend-api-test-nultien.azurewebsites.net/api/BlogPosts')
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          setResults(result);
-        },
-        // (from React docs):
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          console.log(error);
-          setErrorMsg('An error occured');
-        }
-      );
+    fetchPosts().then(
+      (result) => {
+        setResults(result);
+      },
+      // (from React docs):
+      // Note: it's important to handle errors here
+      // instead of a catch() block so that we don't swallow
+      // exceptions from actual bugs in components.
+      (error) => {
+        console.log(error);
+        setErrorMsg('An error occured');
+      }
+    );
   };
 
   useEffect(() => {
     getPosts();
   }, []);
+
+  const closeModal = (event) => {
+    if (event.target.className.includes('close-modal')) {
+      setModalShown(false);
+      setPostId(undefined);
+    }
+  };
+
+  const onSave = (id, formData) => {
+    savePost(id, formData).then(
+      (data) => {
+        // REFRESH THE BLOGLIST:
+        getPosts();
+        // TODO: CLOSE MODAL ( or show a message in it and close it manually ? )
+        setModalShown(false);
+        setPostId(undefined);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
+  const onDelete = (id) => {
+    deletePost(id).then(getPosts);
+  };
+
+  const onEdit = (id) => {
+    setModalShown(true);
+    setPostId(id);
+  };
 
   return (
     <div className='App'>
@@ -62,9 +85,8 @@ const App = () => {
           {results.resultData && results.resultData.length ? (
             <BlogList
               blogs={results.resultData}
-              getPosts={getPosts}
-              setModalShown={setModalShown}
-              setEditingPost={setEditingPost}
+              onDelete={onDelete}
+              onEdit={onEdit}
             />
           ) : (
             <>
@@ -76,13 +98,7 @@ const App = () => {
       </div>
 
       {modalShown && (
-        <Modal
-          closeModal={closeModal}
-          getPosts={getPosts}
-          setModalShown={setModalShown}
-          editingPost={editingPost}
-          setEditingPost={setEditingPost}
-        />
+        <Modal closeModal={closeModal} onSave={onSave} postId={postId} />
       )}
     </div>
   );

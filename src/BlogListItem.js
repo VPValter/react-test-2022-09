@@ -1,26 +1,13 @@
 import profileImage from './80px-placeholder.jpg';
 import blogImage from './100px-placeholder.jpg';
 
-const BlogListItem = ({ blog, getPosts, setModalShown, setEditingPost }) => {
-  const handleDelete = (id) => {
-    fetch(
-      `https://frontend-api-test-nultien.azurewebsites.net/api/BlogPosts/${id}`,
-      {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-      }
-    ).then((res) => {
-      console.log(res);
-      // REFRESH THE BLOGLIST:
-      getPosts();
-    });
+const BlogListItem = ({ blog, onDelete, onEdit }) => {
+  const handleEdit = () => {
+    onEdit(blog.id);
   };
-
-  const handleEdit = (id) => {
-    setModalShown(true);
-    setEditingPost(id);
+  const handleDelete = () => {
+    onDelete(blog.id);
   };
-
   return (
     <div className='blog-item'>
       <div className='blog-header'>
@@ -29,20 +16,10 @@ const BlogListItem = ({ blog, getPosts, setModalShown, setEditingPost }) => {
           <h3>{blog.title}</h3>
           <small>Created at: {blog.createdAt} by some person</small>
         </div>
-        <button
-          type='button'
-          onClick={() => {
-            handleEdit(blog.id);
-          }}
-        >
+        <button type='button' onClick={handleEdit}>
           Edit
         </button>
-        <button
-          type='button'
-          onClick={() => {
-            handleDelete(blog.id);
-          }}
-        >
+        <button type='button' onClick={handleDelete}>
           Delete
         </button>
       </div>

@@ -1,15 +1,14 @@
 import BlogListItem from './BlogListItem';
 
-const BlogList = ({ blogs, getPosts, setModalShown, setEditingPost }) => {
+const BlogList = ({ blogs, onDelete, onEdit }) => {
   return (
     <>
       {blogs.map((item) => (
         <BlogListItem
           key={item.id}
           blog={item}
-          getPosts={getPosts}
-          setModalShown={setModalShown}
-          setEditingPost={setEditingPost}
+          onDelete={onDelete}
+          onEdit={onEdit}
         />
       ))}
     </>
