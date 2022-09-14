@@ -131,6 +131,14 @@ section.top {
 section.top button {
   margin-left: auto;
 }
+.error-msg {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #222;
+  background-color: #ccc;
+}
 
 /* * * * * BLOG * * * * */
 .blog-item:nth-child(odd) {

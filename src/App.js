@@ -7,7 +7,7 @@ import { fetchPosts, deletePost, savePost } from './api-calls';
 
 const App = () => {
   const [results, setResults] = useState([]);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [appMsg, setAppMsg] = useState('');
   const [modalShown, setModalShown] = useState(false);
   const [postId, setPostId] = useState(undefined);
 
@@ -15,6 +15,9 @@ const App = () => {
     fetchPosts().then(
       (result) => {
         setResults(result);
+        if (!result.resultData.length) {
+          setAppMsg('No posts found');
+        }
       },
       // (from React docs):
       // Note: it's important to handle errors here
@@ -22,7 +25,7 @@ const App = () => {
       // exceptions from actual bugs in components.
       (error) => {
         console.log(error);
-        setErrorMsg('An error occured');
+        setAppMsg('An error occured');
       }
     );
   };
@@ -40,21 +43,23 @@ const App = () => {
 
   const onSave = (id, formData) => {
     savePost(id, formData).then(
-      (data) => {
+      () => {
         // REFRESH THE BLOGLIST:
         getPosts();
         // TODO: CLOSE MODAL ( or show a message in it and close it manually ? )
         setModalShown(false);
         setPostId(undefined);
+        setAppMsg('Post saved');
       },
       (error) => {
         console.log(error);
+        setAppMsg('An error occured');
       }
     );
   };
 
   const onDelete = (id) => {
-    deletePost(id).then(getPosts);
+    deletePost(id).then(getPosts).then(setAppMsg('Post deleted'));
   };
 
   const onEdit = (id) => {
@@ -69,6 +74,14 @@ const App = () => {
       <div className='container'>
         <section className='top'>
           <h1>Welcome to my blog</h1>
+          {appMsg && (
+            <div className='error-msg'>
+              <span>{appMsg}</span>
+              <button type='button' onClick={() => setAppMsg('')}>
+                X
+              </button>
+            </div>
+          )}
           <button type='button' onClick={() => setModalShown(true)}>
             Add post
           </button>
@@ -89,10 +102,7 @@ const App = () => {
               onEdit={onEdit}
             />
           ) : (
-            <>
-              <p>No posts found</p>
-              {errorMsg && <p>{errorMsg}</p>}
-            </>
+            ''
           )}
         </main>
       </div>
