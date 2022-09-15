@@ -1,9 +1,11 @@
+import hamburger from './menu-icon.png';
+
 const Header = () => {
   return (
     <header>
       <div className='container'>
         <span className='link home-link'>My Blog</span>
-        <input type='search' placeholder="Search" />
+        <input type='search' placeholder='Search' />
         <nav>
           <ul>
             <li>
@@ -23,6 +25,9 @@ const Header = () => {
             </li>
           </ul>
         </nav>
+        <div className='hamburger'>
+          <img src={hamburger} alt='' className='link' />
+        </div>
       </div>
     </header>
   );
